@@ -1,0 +1,183 @@
+openapi: 3.0.1
+info:
+  title: "Unicorn rental service"
+  description: "Backend for unicorn rental service"
+  version: "0.0.1"
+servers: 
+  - url: http://localhost/unicorns
+    description: "Dev server"
+tags:
+  - name: Rentals
+    description: "Operations on renting unicorns"
+  - name: Users
+    description: "Operations on users"
+  - name: Misc
+    description: "Misc. operations"
+paths:
+  /rentals:
+    post:
+      operationId: rentUnicorn
+      tags:
+        - Rentals
+      parameters: 
+        - name: rentalData
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/Rental'
+      responses:
+        200:
+          description: "Unicorn rented"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rental'
+        500:
+          description: "Invalid request"
+    put:
+      operationId: returnUnicorn
+      tags:
+        - Rentals
+      parameters: 
+        - name: rentalData
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/Rental'
+      responses:
+        200:
+          description: "Unicorn returned"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rental'
+        404:
+          description: "Rental not found"
+        500:
+          description: "Invalid request"
+  /users:
+    get:
+      operationId: getUserById
+      tags:
+        - Users
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        200:
+          description: "User found"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        404:
+          description: "User not found"
+    post:
+      operationId: createUser
+      tags:
+        - Users
+      parameters: 
+        - name: userData
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/User'
+      responses:
+        200:
+          description: "User created"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    put:
+      operationId: modifyUser
+      tags:
+        - Users
+      parameters: 
+        - name: userData
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/User'
+      responses:
+        200:
+          description: "User modified"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        404:
+          description: "User not found"
+    delete:
+      operationId: deleteUserById
+      tags:
+        - Users
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        200:
+          description: "User deleted"
+        404:
+          description: "User not found"
+  /health:
+    get:
+      operationId: getHealth
+      tags:
+        - Misc
+      responses:
+        200:
+          description: "Service healthy"
+        500:
+          description: "Service unhealthy"
+components:
+  schemas:
+    Unicorn:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        restingTime:
+          type: number
+    Rental:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        unicorn:
+          $ref: '#/components/schemas/Unicorn'
+        user:
+          $ref: '#/components/schemas/User'
+        status:
+          type: string
+          enum:
+            - rented
+            - returned
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        username:
+          type: string
+        password:
+          type: string
