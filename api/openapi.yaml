@@ -1,0 +1,223 @@
+openapi: 3.0.1
+info:
+  title: Unicorn rental service
+  description: Backend for unicorn rental service
+  version: 0.0.1
+servers:
+- url: http://localhost/unicorns
+  description: Dev server
+tags:
+- name: Rentals
+  description: Operations on renting unicorns
+- name: Users
+  description: Operations on users
+- name: Misc
+  description: Misc. operations
+paths:
+  /rentals:
+    put:
+      tags:
+      - Rentals
+      operationId: returnUnicorn
+      parameters:
+      - name: rentalData
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/Rental'
+      responses:
+        "200":
+          description: Unicorn returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rental'
+        "404":
+          description: Rental not found
+        "500":
+          description: Invalid request
+      x-swagger-router-controller: Rentals
+    post:
+      tags:
+      - Rentals
+      operationId: rentUnicorn
+      parameters:
+      - name: rentalData
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/Rental'
+      responses:
+        "200":
+          description: Unicorn rented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rental'
+        "500":
+          description: Invalid request
+      x-swagger-router-controller: Rentals
+  /users:
+    get:
+      tags:
+      - Users
+      operationId: getUserById
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+      responses:
+        "200":
+          description: User found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "404":
+          description: User not found
+      x-swagger-router-controller: Users
+    put:
+      tags:
+      - Users
+      operationId: modifyUser
+      parameters:
+      - name: userData
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/User'
+      responses:
+        "200":
+          description: User modified
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "404":
+          description: User not found
+      x-swagger-router-controller: Users
+    post:
+      tags:
+      - Users
+      operationId: createUser
+      parameters:
+      - name: userData
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/User'
+      responses:
+        "200":
+          description: User created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      x-swagger-router-controller: Users
+    delete:
+      tags:
+      - Users
+      operationId: deleteUserById
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+      responses:
+        "200":
+          description: User deleted
+        "404":
+          description: User not found
+      x-swagger-router-controller: Users
+  /health:
+    get:
+      tags:
+      - Misc
+      operationId: getHealth
+      responses:
+        "200":
+          description: Service healthy
+        "500":
+          description: Service unhealthy
+      x-swagger-router-controller: Misc
+components:
+  schemas:
+    Unicorn:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        restingTime:
+          type: number
+      example:
+        restingTime: 0.80082819046101150206595775671303272247314453125
+        name: name
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+    Rental:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        unicorn:
+          $ref: '#/components/schemas/Unicorn'
+        user:
+          $ref: '#/components/schemas/User'
+        status:
+          type: string
+          enum:
+          - rented
+          - returned
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+      example:
+        startTime: 2000-01-23T04:56:07.000+00:00
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        endTime: 2000-01-23T04:56:07.000+00:00
+        unicorn:
+          restingTime: 0.80082819046101150206595775671303272247314453125
+          name: name
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        user:
+          password: password
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          username: username
+        status: rented
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        username:
+          type: string
+        password:
+          type: string
+      example:
+        password: password
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        username: username
