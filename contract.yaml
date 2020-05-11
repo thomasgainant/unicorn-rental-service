@@ -19,12 +19,12 @@ paths:
       operationId: rentUnicorn
       tags:
         - Rentals
-      parameters: 
-        - name: rentalData
-          in: query
-          required: true
-          schema:
-            $ref: '#/components/schemas/Rental'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Rental'
       responses:
         200:
           description: "Unicorn rented"
@@ -38,12 +38,12 @@ paths:
       operationId: returnUnicorn
       tags:
         - Rentals
-      parameters: 
-        - name: rentalData
-          in: query
-          required: true
-          schema:
-            $ref: '#/components/schemas/Rental'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Rental'
       responses:
         200:
           description: "Unicorn returned"
@@ -80,12 +80,12 @@ paths:
       operationId: createUser
       tags:
         - Users
-      parameters: 
-        - name: userData
-          in: query
-          required: true
-          schema:
-            $ref: '#/components/schemas/User'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
       responses:
         200:
           description: "User created"
@@ -97,12 +97,12 @@ paths:
       operationId: modifyUser
       tags:
         - Users
-      parameters: 
-        - name: userData
-          in: query
-          required: true
-          schema:
-            $ref: '#/components/schemas/User'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
       responses:
         200:
           description: "User modified"

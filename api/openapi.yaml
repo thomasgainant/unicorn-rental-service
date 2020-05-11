@@ -19,14 +19,12 @@ paths:
       tags:
       - Rentals
       operationId: returnUnicorn
-      parameters:
-      - name: rentalData
-        in: query
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Rental'
         required: true
-        style: form
-        explode: true
-        schema:
-          $ref: '#/components/schemas/Rental'
       responses:
         "200":
           description: Unicorn returned
@@ -43,14 +41,12 @@ paths:
       tags:
       - Rentals
       operationId: rentUnicorn
-      parameters:
-      - name: rentalData
-        in: query
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Rental'
         required: true
-        style: form
-        explode: true
-        schema:
-          $ref: '#/components/schemas/Rental'
       responses:
         "200":
           description: Unicorn rented
@@ -89,14 +85,12 @@ paths:
       tags:
       - Users
       operationId: modifyUser
-      parameters:
-      - name: userData
-        in: query
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
         required: true
-        style: form
-        explode: true
-        schema:
-          $ref: '#/components/schemas/User'
       responses:
         "200":
           description: User modified
@@ -111,14 +105,12 @@ paths:
       tags:
       - Users
       operationId: createUser
-      parameters:
-      - name: userData
-        in: query
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
         required: true
-        style: form
-        explode: true
-        schema:
-          $ref: '#/components/schemas/User'
       responses:
         "200":
           description: User created

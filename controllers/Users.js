@@ -3,8 +3,8 @@
 var utils = require('../utils/writer.js');
 var Users = require('../service/UsersService');
 
-module.exports.createUser = function createUser (req, res, next, userData) {
-  Users.createUser(userData)
+module.exports.createUser = function createUser (req, res, next, body) {
+  Users.createUser(body)
     .then(function (response) {
       utils.writeJson(res, response);
     })
@@ -33,8 +33,8 @@ module.exports.getUserById = function getUserById (req, res, next, userId) {
     });
 };
 
-module.exports.modifyUser = function modifyUser (req, res, next, userData) {
-  Users.modifyUser(userData)
+module.exports.modifyUser = function modifyUser (req, res, next, body) {
+  Users.modifyUser(body)
     .then(function (response) {
       utils.writeJson(res, response);
     })

@@ -32,12 +32,13 @@ sequelize.sync()
   console.log(john.toJSON());
 });
 
+
 /**
  *
- * userData User 
+ * body User 
  * returns User
  **/
-exports.createUser = function(userData) {
+exports.createUser = function(body) {
   return new Promise(function(resolve, reject) {
     var examples = {};
     examples['application/json'] = {
@@ -90,10 +91,10 @@ exports.getUserById = function(userId) {
 
 /**
  *
- * userData User 
+ * body User 
  * returns User
  **/
-exports.modifyUser = function(userData) {
+exports.modifyUser = function(body) {
   return new Promise(function(resolve, reject) {
     var examples = {};
     examples['application/json'] = {

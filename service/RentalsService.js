@@ -1,5 +1,7 @@
 'use strict';
 
+/* ORM init */
+
 const { v4: uuidv4 } = require('uuid');
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize('unicorn', 'root', '', {
@@ -33,7 +35,7 @@ sequelize.sync().then(() => {});
 
 /**
  *
- * rentalData Rental 
+ * body Rental 
  * returns Rental
  **/
 exports.rentUnicorn = function(rentalData) {
@@ -54,33 +56,24 @@ exports.rentUnicorn = function(rentalData) {
 
 /**
  *
- * rentalData Rental 
+ * body Rental 
  * returns Rental
  **/
-exports.returnUnicorn = function(rentalData) {
+exports.returnUnicorn = function(body) {
   return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-  "startTime" : "2000-01-23T04:56:07.000+00:00",
-  "id" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
-  "endTime" : "2000-01-23T04:56:07.000+00:00",
-  "unicorn" : {
-    "restingTime" : 0.8008281904610115,
-    "name" : "name",
-    "id" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
-  },
-  "user" : {
-    "password" : "password",
-    "id" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
-    "username" : "username"
-  },
-  "status" : "rented"
-};
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
+    Rental.update({
+      unicorn: body.unicorn.id,
+      user: body.user.id,
+      status: 1,
+      startTime: body.startTime,
+      endTime: new Date()
+    }, {
+      where: {
+        id: body.id
+      }
+    }).then((rental) => {
+      resolve(rental)
+    });
   });
 }
 
