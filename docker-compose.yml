@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+    backend:
+        build: .
+        ports:
+            - 3000:3000
+        depends_on:
+            - db-unicorn
+
+    db-unicorn:
+        image: mysql
+        command: --default-authentication-plugin=mysql_native_password
+        restart: always
+        volumes:
+            - ./data:/var/lib/mysql
+        environment:
+            MYSQL_DATABASE: unicorn
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_TCP_PORT: 3308
+        ports:
+            - 3308:3308
+    
+    adminer:
+        image: adminer
+        restart: always
+        ports:
+            - 3001:8080

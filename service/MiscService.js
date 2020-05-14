@@ -1,8 +1,8 @@
 'use strict';
 
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('unicorn', 'root', '', {
-  host: '127.0.0.1',
+const sequelize = new Sequelize('unicorn', 'root', 'root', {
+  host: 'db-unicorn',
   port: '3308',
   dialect: 'mysql'
 });
