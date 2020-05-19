@@ -1,5 +1,25 @@
 # Unicorn rental service
 
+## Coding challenge from Ambidexter GmbH
+
+Unicorns the new taxis. We allow our customers to rent a unicorn and return it at any time later. When the unicorn is returned we charge the customer with 8 EUR per started rental hour.
+
+## Challenge
+
+Implement a simple microservice for unicorn rental.
+
+It should:
+- expose an endpoint ``/unicorns/rentals`` that allows for renting an unicorn
+- expose an endpoint ``/unicorns/rentals`` that allows the return of a rented unicorn
+- expose an appropriate ``/healtz`` endpoint that allows checking if the service works
+
+Requirements:
+- we only have four unicorns at the moment: "Pinky Pie", "Rainbow Dash", "Fluttershy" and "Twilight Sparkle"
+- each unicorn can be rented once at any given moment
+- each unicorn needs 15 minutes of rest between consecutive rentals, with the exception of "Twilight Sparkle", she needs 30 minutes
+
+## My result
+
 ### Running the server
 
 #### With Docker and Docker compose
